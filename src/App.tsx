@@ -55,7 +55,7 @@ export default function App() {
 
   // if already logged in user tries to go login or signup pages
   useEffect(() => {
-    if (location.pathname === '/signin' || location.pathname === '/signup' || location.pathname === '/complete-profile') {
+    if (location.pathname === '/auth/signin' || location.pathname === '/auth/signup' || location.pathname === '/complete-profile') {
       navigate(location.state?.return_url || -1)
     }
     checkCompletedProfile()

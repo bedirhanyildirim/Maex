@@ -1,12 +1,14 @@
 import { Link } from 'react-router-dom'
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 import { setLoader } from '../stores/loader'
 import { createUserWithEmailAndPassword } from 'firebase/auth'
 import { auth } from '../firebase/firebase.config'
 
 export default function SignUp() {
   const dispatch = useDispatch()
+  const navigate = useNavigate()
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -19,6 +21,7 @@ export default function SignUp() {
       console.log(`an error occurred: ${e}`)
     } finally {
       dispatch(setLoader(false))
+      navigate('/')
     }
   }
 
@@ -63,7 +66,7 @@ export default function SignUp() {
         </form>
         <p className="mt-8 text-center">
           Already have an account?{' '}
-          <Link to="/signin" className="text-blue-500 font-semibold">
+          <Link to="/auth/signin" className="text-blue-500 font-semibold">
             Sign In
           </Link>
         </p>

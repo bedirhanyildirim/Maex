@@ -7,7 +7,7 @@ export default function PrivateRoute({ children }) {
   const location = useLocation()
 
   if (!isLoggedIn) {
-    return <Navigate to="/signin" replace={true} state={{
+    return <Navigate to="/auth/signin" replace={true} state={{
       return_url: location.pathname
     }} />
   }

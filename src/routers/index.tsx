@@ -37,7 +37,7 @@ const routes = [
     ]
   },
   {
-    path: '/',
+    path: '/auth',
     element: <GuestUser />,
     children: [
       {
