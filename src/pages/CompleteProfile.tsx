@@ -35,7 +35,7 @@ export default function CompleteProfile() {
         created: dateISO
       }
 
-      const res = await setDoc(doc(db, 'users', userInfo.uid), newUser)
+      await setDoc(doc(db, 'users', userInfo.uid), newUser)
       dispatch(setUserProfile(newUser))
       console.log('başarılı')
     } catch (e) {

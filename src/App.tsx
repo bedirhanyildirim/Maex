@@ -2,11 +2,11 @@ import { useLocation, useNavigate, useRoutes } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import routers from './routers'
 import { onAuthStateChanged } from 'firebase/auth'
-import {auth, db} from './firebase/firebase.config'
-import {setUser, setUserProfile} from "./stores/auth"
+import { auth, db } from './firebase/firebase.config'
+import { setUser, setUserProfile } from "./stores/auth"
 import { useEffect, useState } from 'react'
 import { setLoader } from './stores/loader'
-import { doc, getDoc } from 'firebase/firestore'
+import { doc, getDoc, setDoc } from 'firebase/firestore'
 
 export default function App() {
   const dispatch = useDispatch()
@@ -33,10 +33,14 @@ export default function App() {
         dispatch(setUser(userData))
 
         const profileSnap = doc(db, 'users', user.uid)
-        const profileData = await getDoc(profileSnap)
+        let profileData = await getDoc(profileSnap)
 
         if (profileData.exists()) {
-          //console.log(profileData.data())
+          const date = new Date()
+          const dateISO = date.toISOString()
+
+          await setDoc(doc(db, 'users', user.uid), {lastLogin: dateISO}, {merge: true})
+          profileData = await getDoc(profileSnap)
           dispatch(setUserProfile(profileData.data()))
         } else {
           dispatch(setUserProfile({}))
