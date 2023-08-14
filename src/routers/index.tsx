@@ -3,6 +3,7 @@ import Profile from '../pages/Profile'
 import SignIn from '../pages/SignIn'
 import SignUp from '../pages/SignUp'
 import CompleteProfile from '../pages/CompleteProfile'
+import Messages from '../pages/Messages'
 import GuestUser from '../layouts/GuestUser'
 import SignedIn from '../layouts/SignedIn'
 import PrivateRoute from './privateRoute'
@@ -26,6 +27,11 @@ const routes = [
       {
         path: 'complete-profile',
         element: <CompleteProfile />,
+        auth: true
+      },
+      {
+        path: 'messages',
+        element: <Messages />,
         auth: true
       }
     ]

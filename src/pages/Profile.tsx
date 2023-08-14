@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom'
 import { signOut } from 'firebase/auth'
 import { auth } from '../firebase/firebase.config'
 import { useDispatch } from 'react-redux'
@@ -18,10 +17,9 @@ export default function Profile() {
   }
 
   return (
-    <div className="w-full p-4">
-      <Link to="/">Home</Link>
+    <div className="">
       <div>Profile Page!</div>
-      <div className="mt-20">
+      <div className="mt-8">
         <button
           type="button"
           onClick={handleLogout}
