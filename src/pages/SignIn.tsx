@@ -26,9 +26,9 @@ export default function SignIn() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="bg-white p-8 rounded shadow-md w-96">
-        <h1 className="text-2xl font-semibold mb-4">Sign In</h1>
+    <div className="w-full h-full flex items-center justify-center">
+      <div className="w-full max-w-md">
+        <h1 className="text-2xl font-semibold mb-4 text-center mb-10">Sign In</h1>
         <form onSubmit={handleSignIn}>
           <div className="mb-4">
             <label htmlFor="email" className="block text-sm font-medium mb-1">
@@ -64,7 +64,7 @@ export default function SignIn() {
             className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600"
           />
         </form>
-        <p className="mt-4 text-center">
+        <p className="mt-8 text-center">
           Don't have an account?{' '}
           <Link to="/signup" className="text-blue-500 font-semibold">
             Sign Up
