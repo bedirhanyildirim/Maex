@@ -44,6 +44,7 @@ export default function App() {
           dispatch(setUserProfile(profileData.data()))
         } else {
           dispatch(setUserProfile({}))
+          navigate('/complete-profile')
         }
         setIsAuth(true)
       } else {
@@ -54,19 +55,19 @@ export default function App() {
   }, [])
 
   // if already logged in user tries to go login or signup pages
-  useEffect(() => {
+  /*useEffect(() => {
     if (location.pathname === '/auth/signin' || location.pathname === '/auth/signup' || location.pathname === '/complete-profile') {
       navigate(location.state?.return_url || -1)
     }
     checkCompletedProfile()
-  }, [isAuth])
+  }, [isAuth, location.pathname])
 
   const checkCompletedProfile = () => {
-    if (Object.keys(userInfo).length > 0 && Object.keys(userProfile).length < 1 && location.pathname !== '/complete-profile') {
+    if (Object.keys(userInfo).length > 0 && Object.keys(userProfile).length !== 0 && location.pathname !== '/complete-profile') {
       console.log('missing user info')
       navigate('/complete-profile')
     }
-  }
+  }*/
 
   return useRoutes(routers)
 }

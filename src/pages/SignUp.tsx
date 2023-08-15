@@ -21,7 +21,7 @@ export default function SignUp() {
       console.log(`an error occurred: ${e}`)
     } finally {
       dispatch(setLoader(false))
-      navigate('/')
+      navigate('/complete-profile')
     }
   }
 

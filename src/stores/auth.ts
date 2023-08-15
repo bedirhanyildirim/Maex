@@ -3,7 +3,8 @@ import { createSlice } from '@reduxjs/toolkit'
 const initialState = {
   isLoggedIn: false,
   user: {},
-  userProfile: {}
+  userProfile: {},
+  isProfileCompleted: false
 }
 
 const auth = createSlice({
@@ -15,7 +16,8 @@ const auth = createSlice({
       state.isLoggedIn = Object.keys(action.payload).length !== 0
     },
     setUserProfile: (state, action) => {
-      state.userProfile = action.payload
+      state.userProfile = action.payload,
+      state.isProfileCompleted = Object.keys(action.payload).length !== 0
     }
   },
 })
