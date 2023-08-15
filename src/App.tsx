@@ -6,7 +6,7 @@ import { auth, db } from './firebase/firebase.config'
 import { setUser, setUserProfile } from "./stores/auth"
 import { useEffect, useState } from 'react'
 import { setLoader } from './stores/loader'
-import { doc, getDoc, setDoc } from 'firebase/firestore'
+import { doc, getDoc, setDoc, Timestamp } from 'firebase/firestore'
 
 export default function App() {
   const dispatch = useDispatch()
@@ -36,10 +36,9 @@ export default function App() {
         let profileData = await getDoc(profileSnap)
 
         if (profileData.exists()) {
-          const date = new Date()
-          const dateISO = date.toISOString()
+          const myTimestamp = Timestamp.fromDate(new Date());
 
-          await setDoc(doc(db, 'users', user.uid), {lastLogin: dateISO}, {merge: true})
+          await setDoc(doc(db, 'users', user.uid), {lastLogin: myTimestamp}, {merge: true})
           profileData = await getDoc(profileSnap)
           dispatch(setUserProfile(profileData.data()))
         } else {

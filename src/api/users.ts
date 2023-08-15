@@ -1,4 +1,4 @@
-import { doc, getDoc, getDocs, query, where } from "firebase/firestore"
+import { doc, getDoc, getDocs, query, where, orderBy } from "firebase/firestore"
 import { usersCollection, db } from "../firebase/firebase.config"
 
 /*
@@ -6,7 +6,7 @@ User {
   birthdate: "1996-12-20"
   created: "2023-08-13T22:49:49.233Z"
   gender:"male"
-  lastLogin:"2023-08-15T00:08:02.400Z"
+  lastLogin: timestamp
   lookingFor:"female"
   name: "Bedirhan"
   uid: "9vOUhi5x4HUZgMucNDmZvmAwvjH2"
@@ -17,9 +17,10 @@ const getUsers = async (user) => {
   const users = []
   //const q = query(usersCollection, where('uid', '!=', user.uid), where('gender', '==', 'user.looking'))
   // lookingfor == gender
-  const q = query(usersCollection, where('uid', '!=', user.uid))
+  const q = query(usersCollection, orderBy('lastLogin', 'desc'))
   const docSnap = await getDocs(q)
-  docSnap.forEach((doc) => {
+  const docSnapNotMe = docSnap.docs.filter(u => u.data().uid !== user.uid)
+  docSnapNotMe.forEach((doc) => {
     users.push(doc.data())
   })
   return users

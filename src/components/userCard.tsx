@@ -22,7 +22,7 @@ export default function UserCard({user}) {
   const timeAgo = (timestamp) => {
     if (timestamp === undefined) return ''
     const currentDate = new Date();
-    const inputDate = new Date(timestamp);
+    const inputDate = new Date(timestamp.seconds * 1000);
 
     const elapsedMilliseconds = currentDate - inputDate;
     const elapsedSeconds = Math.floor(elapsedMilliseconds / 1000);
