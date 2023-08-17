@@ -6,7 +6,11 @@ const store = configureStore({
   reducer: {
     auth,
     loader
-  }
+  },
+  middleware: getDefaultMiddleware =>
+    getDefaultMiddleware({
+      serializableCheck: false,
+    }),
 })
 
 export default store

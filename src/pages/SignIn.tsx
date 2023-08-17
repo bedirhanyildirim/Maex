@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import { useState } from 'react'
-import {useDispatch} from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { setLoader } from '../stores/loader'
 import { signInWithEmailAndPassword } from 'firebase/auth'
@@ -66,7 +66,7 @@ export default function SignIn() {
         </form>
         <p className="mt-8 text-center">
           Don't have an account?{' '}
-          <Link to="/signup" className="text-blue-500 font-semibold">
+          <Link to="/auth/signup" className="text-blue-500 font-semibold">
             Sign Up
           </Link>
         </p>

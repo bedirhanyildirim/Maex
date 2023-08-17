@@ -1,20 +1,17 @@
-import { useLocation, useNavigate, useRoutes } from 'react-router-dom'
+import { useNavigate, useRoutes } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import routers from './routers'
 import { onAuthStateChanged } from 'firebase/auth'
 import { auth, db } from './firebase/firebase.config'
 import { setUser, setUserProfile } from "./stores/auth"
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { setLoader } from './stores/loader'
-import { doc, getDoc, setDoc } from 'firebase/firestore'
+import { doc, getDoc, setDoc, Timestamp } from 'firebase/firestore'
 
 export default function App() {
   const dispatch = useDispatch()
-  const location = useLocation()
   const navigate = useNavigate()
-  const [isAuth, setIsAuth] = useState(false)
-  const userInfo = useSelector(state => state.auth.user)
-  const userProfile = useSelector(state => state.auth.userProfile)
+  const isLoggedIn = useSelector(state => state.auth.isLoggedIn)
 
   // if user is already logged in
   useEffect(() => {
@@ -36,37 +33,22 @@ export default function App() {
         let profileData = await getDoc(profileSnap)
 
         if (profileData.exists()) {
-          const date = new Date()
-          const dateISO = date.toISOString()
+          const myTimestamp = Timestamp.fromDate(new Date());
 
-          await setDoc(doc(db, 'users', user.uid), {lastLogin: dateISO}, {merge: true})
+          await setDoc(doc(db, 'users', user.uid), {lastLogin: myTimestamp}, {merge: true})
           profileData = await getDoc(profileSnap)
           dispatch(setUserProfile(profileData.data()))
+          navigate('/')
         } else {
           dispatch(setUserProfile({}))
+          navigate('/complete-profile')
         }
-        setIsAuth(true)
       } else {
         dispatch(setUser({}))
       }
       dispatch(setLoader(false))
     })
-  }, [])
-
-  // if already logged in user tries to go login or signup pages
-  useEffect(() => {
-    if (location.pathname === '/signin' || location.pathname === '/signup' || location.pathname === '/complete-profile') {
-      navigate(location.state?.return_url || -1)
-    }
-    checkCompletedProfile()
-  }, [isAuth])
-
-  const checkCompletedProfile = () => {
-    if (Object.keys(userInfo).length > 0 && Object.keys(userProfile).length < 1 && location.pathname !== '/complete-profile') {
-      console.log('missing user info')
-      navigate('/complete-profile')
-    }
-  }
+  }, [isLoggedIn])
 
   return useRoutes(routers)
 }

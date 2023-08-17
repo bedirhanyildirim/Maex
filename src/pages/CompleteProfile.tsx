@@ -48,8 +48,8 @@ export default function CompleteProfile() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="bg-white p-8 rounded shadow-md w-96">
+    <div className="w-full h-full flex items-center justify-center">
+      <div className="w-full max-w-md">
         <h1 className="text-2xl font-semibold mb-4">Complete Your Profile</h1>
         <form onSubmit={handleProfileUpdate}>
           <div className="mb-4">
