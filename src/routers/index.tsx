@@ -2,11 +2,12 @@ import Home from '../pages/Home'
 import Profile from '../pages/Profile'
 import SignIn from '../pages/SignIn'
 import SignUp from '../pages/SignUp'
-import CompleteProfile from '../pages/CompleteProfile'
+import Discover from '../pages/Discover'
 import Messages from '../pages/Messages'
-import GuestUser from '../layouts/GuestUser'
-import SignedIn from '../layouts/SignedIn'
 import PrivateRoute from './privateRoute'
+import SignedIn from '../layouts/SignedIn'
+import GuestUser from '../layouts/GuestUser'
+import CompleteProfile from '../pages/CompleteProfile'
 import { Navigate } from 'react-router-dom'
 
 const routes = [
@@ -17,6 +18,11 @@ const routes = [
       {
         path: '',
         element: <Home />,
+        auth: true
+      },
+      {
+        path: '/discover',
+        element: <Discover />,
         auth: true
       },
       {

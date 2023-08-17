@@ -1,6 +1,6 @@
-import {FiSmile} from "react-icons/fi";
+import {FiSmile} from 'react-icons/fi'
 
-export default function UserCard({user}) {
+export default function UserCard({user, displayPreferences = true}) {
 
   const getLogoClasses = () => {
     return user.gender === 'male' ? "flex items-center justify-center rounded-full border border-blue-500 border-4" : "flex items-center justify-center rounded-full border border-red-500 border-4"
@@ -52,9 +52,11 @@ export default function UserCard({user}) {
             <span className="font-semibold">{user.name}</span>,
             <span>{calculateAge(user.birthdate)}</span>
           </div>
-          <div className="text-xs capitalize text-gray-500">
-            Looking for: {user.lookingFor}
-          </div>
+          {displayPreferences && (
+            <div className="text-xs capitalize text-gray-500">
+              Looking for: {user.lookingFor}
+            </div>
+          )}
         </div>
         <div className="ml-auto text-xs">
           {timeAgo(user.lastLogin)}

@@ -1,15 +1,15 @@
-import useUsers from '../hooks/useUsers'
-import UserCard from "../components/userCard";
+import UserCard from '../components/userCard'
+import useUsersByPreferences from '../hooks/useUsersByPreferences'
 
 export default function Home() {
 
-  const users = useUsers()
+  const users = useUsersByPreferences()
 
   return (
     <div className="w-full">
       <div className="mt-4">
         {
-          users.map(u => <UserCard user={u} key={u.uid} />)
+          users.map(u => <UserCard user={u} key={u.uid} displayPreferences={false} />)
         }
       </div>
     </div>
