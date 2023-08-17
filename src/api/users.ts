@@ -17,9 +17,16 @@ const getUsers = async (user) => {
   const users = []
   //const q = query(usersCollection, where('uid', '!=', user.uid), where('gender', '==', 'user.looking'))
   // lookingfor == gender
-  const q = query(usersCollection, orderBy('lastLogin', 'desc'))
+  const q = query(
+    usersCollection,
+    where('uid', '!=', user.uid),
+    where('gender', '==', user.lookingFor),
+    where('lookingFor', '==', user.gender),
+    orderBy('lastLogin', 'desc')
+  );
   const docSnap = await getDocs(q)
-  const docSnapNotMe = docSnap.docs.filter(u => u.data().uid !== user.uid)
+  const docSnapNotMe = docSnap.docs.filter(
+    u => u.data().uid !== user.uid)
   docSnapNotMe.forEach((doc) => {
     users.push(doc.data())
   })
