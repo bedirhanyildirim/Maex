@@ -1,6 +1,6 @@
 import {FiSmile} from 'react-icons/fi'
 
-export default function UserCard({user, displayPreferences = true}) {
+export default function UserCard({user, displayPreferences = true, displayLastSeen = true}) {
 
   const getLogoClasses = () => {
     return user.gender === 'male' ? "flex items-center justify-center rounded-full border border-blue-500 border-4" : "flex items-center justify-center rounded-full border border-red-500 border-4"
@@ -58,9 +58,11 @@ export default function UserCard({user, displayPreferences = true}) {
             </div>
           )}
         </div>
-        <div className="ml-auto text-xs">
-          {timeAgo(user.lastLogin)}
-        </div>
+        {displayLastSeen && (
+          <div className="ml-auto text-xs">
+            {timeAgo(user.lastLogin)}
+          </div>
+        )}
       </div>
     </div>
   )
