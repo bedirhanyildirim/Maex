@@ -7,7 +7,6 @@ const useUsers = () => {
   const [users, setUsers] = useState([])
 
   useEffect(() => {
-    console.log("fetch users")
     getUsers(userProfile).then(res => {
       setUsers(res)
     })
