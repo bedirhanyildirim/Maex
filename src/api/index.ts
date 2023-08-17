@@ -1,3 +1,3 @@
-import { getUsers, getMyProfile } from './users'
+import { getAllUsersByLastActivity, getUsersByPreferences, getMyProfile } from './users'
 
-export { getUsers, getMyProfile }
+export { getAllUsersByLastActivity, getUsersByPreferences, getMyProfile }

@@ -13,21 +13,27 @@ User {
 }
 */
 
-const getUsers = async (user) => {
+const getAllUsersByLastActivity = async (user) => {
   const users = []
-  //const q = query(usersCollection, where('uid', '!=', user.uid), where('gender', '==', 'user.looking'))
-  // lookingfor == gender
+  const q = query(usersCollection, orderBy('lastLogin', 'desc'))
+  const docSnap = await getDocs(q)
+  const docSnapNotMe = docSnap.docs.filter(u => u.data().uid !== user.uid)
+  docSnapNotMe.forEach((doc) => {
+    users.push(doc.data())
+  })
+  return users
+}
+
+const getUsersByPreferences = async (user) => {
+  const users = []
   const q = query(
     usersCollection,
     where('uid', '!=', user.uid),
     where('gender', '==', user.lookingFor),
-    where('lookingFor', '==', user.gender),
-    orderBy('lastLogin', 'desc')
+    where('lookingFor', '==', user.gender)
   );
   const docSnap = await getDocs(q)
-  const docSnapNotMe = docSnap.docs.filter(
-    u => u.data().uid !== user.uid)
-  docSnapNotMe.forEach((doc) => {
+  docSnap.forEach((doc) => {
     users.push(doc.data())
   })
   return users
@@ -46,6 +52,7 @@ const getMyProfile = async (uid) => {
 }
 
 export {
-  getUsers,
+  getAllUsersByLastActivity,
+  getUsersByPreferences,
   getMyProfile
 }
