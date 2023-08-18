@@ -4,7 +4,9 @@ const initialState = {
   isLoggedIn: false,
   user: {},
   userProfile: {},
-  isProfileCompleted: false
+  isProfileCompleted: false,
+  geoLocation: {},
+  isGeoLocationAllowed: true
 }
 
 const auth = createSlice({
@@ -18,9 +20,15 @@ const auth = createSlice({
     setUserProfile: (state, action) => {
       state.userProfile = action.payload,
       state.isProfileCompleted = Object.keys(action.payload).length !== 0
+    },
+    setGeoLocation: (state, action) => {
+      state.geoLocation = action.payload
+    },
+    setGeoLocationAllowed: (state, action) => {
+      state.isGeoLocationAllowed = action.payload
     }
   },
 })
 
-export const { setUser, setUserProfile } = auth.actions
+export const { setUser, setUserProfile, setGeoLocation, setGeoLocationAllowed } = auth.actions
 export default auth.reducer

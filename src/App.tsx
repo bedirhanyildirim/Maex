@@ -3,15 +3,17 @@ import { useDispatch, useSelector } from 'react-redux'
 import routers from './routers'
 import { onAuthStateChanged } from 'firebase/auth'
 import { auth, db } from './firebase/firebase.config'
-import { setUser, setUserProfile } from "./stores/auth"
+import { setUser, setUserProfile, setGeoLocation, setGeoLocationAllowed } from './stores/auth'
 import { useEffect } from 'react'
 import { setLoader } from './stores/loader'
 import { doc, getDoc, setDoc, Timestamp } from 'firebase/firestore'
+import { getCurrentLocation } from './utils'
 
 export default function App() {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const isLoggedIn = useSelector(state => state.auth.isLoggedIn)
+  const isProfileCompleted = useSelector(state => state.auth.isProfileCompleted)
 
   // if user is already logged in
   useEffect(() => {
@@ -49,6 +51,30 @@ export default function App() {
       dispatch(setLoader(false))
     })
   }, [isLoggedIn])
+
+  useEffect(() => {
+    if(isLoggedIn && isProfileCompleted) {
+      dispatch(setLoader(true))
+      getCurrentLocation()
+        .then((res) => {
+          dispatch(setGeoLocation({
+            timestamp: res.timestamp,
+            longitude: res.coords.longitude,
+            latitude: res.coords.latitude,
+            accuracy: res.coords.accuracy
+          }))
+          dispatch(setGeoLocationAllowed(true))
+        })
+        .catch((e) => {
+          console.log(e.name)
+          dispatch(setGeoLocationAllowed(false))
+        })
+        .finally(() => {
+          dispatch(setLoader(false))
+        })
+    }
+  }, [isLoggedIn, isProfileCompleted]);
+
 
   return useRoutes(routers)
 }
