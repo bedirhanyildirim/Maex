@@ -1,17 +1,5 @@
-import { doc, getDoc, getDocs, query, where, orderBy } from "firebase/firestore"
-import { usersCollection, db } from "../firebase/firebase.config"
-
-/*
-User {
-  birthdate: "1996-12-20"
-  created: "2023-08-13T22:49:49.233Z"
-  gender:"male"
-  lastLogin: timestamp
-  lookingFor:"female"
-  name: "Bedirhan"
-  uid: "9vOUhi5x4HUZgMucNDmZvmAwvjH2"
-}
-*/
+import { doc, getDoc, getDocs, query, where, orderBy } from 'firebase/firestore'
+import { usersCollection, db } from '../firebase/firebase.config'
 
 const getAllUsersByLastActivity = async (user) => {
   const users = []
